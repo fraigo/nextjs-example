@@ -36,13 +36,127 @@ You can install components and setup your project manually using `npm`
     * Base packages: `npm install next@latest react@latest react-dom@latest`
     * Tailwind CSS: `npm install --save-dev tailwindcss postcss`
     * ESLint: `npm install --save-dev eslint`
-2. Create `app` folder
-3. Inside `app` folder create a `layout.tsx` file
-4. Inside `app` folder create a `page.tsx` file
-5. Optionally, create a global css `app/globals.css` file to include in your layout
-5. If you are using GIT, create a `.gitignore` file to setup a list of files that does not need version tracking
+2. Add nextjs scripts to `package.json`
+3. Create `app` folder
+4. Inside `app` folder create a `layout.tsx` file
+5. Inside `app` folder create a `page.tsx` file
+6. Optionally, create a global css `app/globals.css` file to include in your layout
+7. If you are using GIT, create a `.gitignore` file to setup a list of files that does not need version tracking
 
-#### Basic example of `layout.tsx` file
+#### Run scripts for package.json
+
+Include this section in `package.json` file:
+
+```json
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+```
+
+#### Setup TailwindCSS
+
+File `tailwind.config.ts`
+
+```typescript
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
+```
+
+File `postcss.config.mjs`
+
+```javascript
+/** @type {import('postcss-load-config').Config} */
+const config = {
+    plugins: {
+      tailwindcss: {},
+    },
+  };
+  
+  export default config;
+```
+
+File `next.config.mjs`
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default nextConfig;
+```
+
+
+#### Setup `eslint`
+
+If `eslint` was installed manually, you may need to create this basic `eslintrc.json` file
+
+```json
+{
+    "extends": "next/core-web-vitals"
+}
+```
+
+#### Setup `.gitignore`
+
+```bash
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+```
+
+
+### Basic example of `layout.tsx` file
 
 This example includes the basic RootLayout 
 
@@ -60,7 +174,7 @@ export default function RootLayout({
 }
 ```
 
-#### Another more complete example of `layout.tsx` file
+### Another more complete example of `layout.tsx` file
 
 This example includes:
 
@@ -126,57 +240,9 @@ body {
 }
 ```
 
-Additional files to enable TailwindCSS configuration
-
-File `tailwind.config.ts`
-
-```typescript
-import type { Config } from "tailwindcss";
-
-const config: Config = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-    },
-  },
-  plugins: [],
-};
-export default config;
-```
-
-File `postcss.config.mjs`
-
-```javascript
-/** @type {import('postcss-load-config').Config} */
-const config = {
-    plugins: {
-      tailwindcss: {},
-    },
-  };
-  
-  export default config;
-```
-
-File `next.config.mjs`
-
-```javascript
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-export default nextConfig;
-```
 
 
-#### Example `page.tsx` file
+### Example `page.tsx` file
 
 ```javascript
 export default function Page() {
@@ -187,6 +253,18 @@ export default function Page() {
 ```
 
 
-### Enable use of eslint 
+
+
+
+## Preview in dev mode
+
+To preview your site in dev run this command:
+
+`npm run dev`
+
+The dev site will be up and running at http://localhost:3000 (or the next port available)
+
+
+
 
 
