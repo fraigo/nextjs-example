@@ -1,0 +1,136 @@
+# NextJS Project Example
+
+This is a step-by-step project setup for a NextJS app
+
+## Prerequisites
+
+* NodeJS 18.17+
+
+## Installation
+
+Install base components. There are 2 ways: `npx` and regular `npm` packages installation.
+
+### Installation using npx
+
+Using `npx` the project structure will be created automatically, you will get a few options to select during the installation. This is an example using the default options for a project named `example`:
+
+```
+Ok to proceed? (y) y
+
+✔ What is your project named? … example
+✔ Would you like to use TypeScript? … No / Yes
+✔ Would you like to use ESLint? … No / Yes
+✔ Would you like to use Tailwind CSS? … No / Yes
+✔ Would you like to use `src/` directory? … No / Yes
+✔ Would you like to use App Router? (recommended) … No / Yes
+✔ Would you like to customize the default import alias (@/*)? … No / Yes
+Creating a new Next.js app in /Users/francisco/projects/nextjs-example-npx/example.
+```
+
+
+### Installation using npm packages
+
+You can install components and setup your project manually using `npm`
+
+1. Install packages: 
+    * Base packages: `npm install next@latest react@latest react-dom@latest`
+    * Tailwind CSS: `npm install tailwindcss`
+2. Create `app` folder
+3. Inside `app` folder create a `layout.tsx` file
+4. Inside `app` folder create a `page.tsx` file
+5. Optionally, create a global css `app/globals.css` file to include in your layout
+5. If you are using GIT, create a `.gitignore` file to setup a list of files that does not need version tracking
+
+#### Basic example of `layout.tsx` file
+
+This example includes the basic RootLayout 
+
+```javascript
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+#### Another more complete example of `layout.tsx` file
+
+This example includes:
+
+* Font import (Inter font) and embedding using className 
+* Page metadata (title/description)
+* Global css import
+
+```javascript
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "NextJS App",
+  description: "NextJS App Example",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
+  );
+}
+```
+
+Example `globals.css` file with basic definitions, including Tailwind CSS imports and dark mode support
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #000;
+  --background: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #fff;
+    --background: #000;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer utilities {
+  .example{
+    text-align: center;
+    margin: 2em auto;
+  }
+}
+```
+
+
+#### Example `page.tsx` file
+
+```javascript
+export default function Page() {
+  return (
+    <h1>Hello, Next.js!</h1>
+  )
+}
+```
