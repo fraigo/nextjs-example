@@ -12,7 +12,9 @@ Install base components. There are 2 ways: `npx` and regular `npm` packages inst
 
 ### Installation using npx
 
-Using `npx` the project structure will be created automatically, you will get a few options to select during the installation. This is an example using the default options for a project named `example`:
+Run `npx create-next-app@latest` 
+
+The project structure will be created automatically, you will get a few options to select during the installation. A subfolder witht he project name will be created. This is an example using the default options for a project named `example` (it will create `example` folder with all the project files)
 
 ```
 Ok to proceed? (y) y
