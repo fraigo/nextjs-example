@@ -34,7 +34,8 @@ You can install components and setup your project manually using `npm`
 
 1. Install packages: 
     * Base packages: `npm install next@latest react@latest react-dom@latest`
-    * Tailwind CSS: `npm install tailwindcss`
+    * Tailwind CSS: `npm install --save-dev tailwindcss postcss`
+    * ESLint: `npm install --save-dev eslint`
 2. Create `app` folder
 3. Inside `app` folder create a `layout.tsx` file
 4. Inside `app` folder create a `page.tsx` file
@@ -65,7 +66,7 @@ This example includes:
 
 * Font import (Inter font) and embedding using className 
 * Page metadata (title/description)
-* Global css import
+* Global css import, including TailwindCSS
 
 ```javascript
 import type { Metadata } from "next";
@@ -93,6 +94,7 @@ export default function RootLayout({
 ```
 
 Example `globals.css` file with basic definitions, including Tailwind CSS imports and dark mode support
+
 
 ```css
 @tailwind base;
@@ -124,13 +126,67 @@ body {
 }
 ```
 
+Additional files to enable TailwindCSS configuration
+
+File `tailwind.config.ts`
+
+```typescript
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
+```
+
+File `postcss.config.mjs`
+
+```javascript
+/** @type {import('postcss-load-config').Config} */
+const config = {
+    plugins: {
+      tailwindcss: {},
+    },
+  };
+  
+  export default config;
+```
+
+File `next.config.mjs`
+
+```javascript
+/** @type {import('next').NextConfig} */
+const nextConfig = {};
+
+export default nextConfig;
+```
+
 
 #### Example `page.tsx` file
 
 ```javascript
 export default function Page() {
   return (
-    <h1>Hello, Next.js!</h1>
+    <h1 className="example">Hello, Next.js!</h1>
   )
 }
 ```
+
+
+### Enable use of eslint 
+
+
